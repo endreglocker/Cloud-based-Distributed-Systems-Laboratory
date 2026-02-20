@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    List of your images
+{% endblock %}
+
+{% block content %}
+<section>
+    <h1>List of your images</h1>
+
+    <div class="sort-controls">
+        <a href="?sort_by=title&order={% if sort_by == 'title' %}{{ next_order }}{% else %}asc{% endif %}">
+            <button class="{% if sort_by == 'title' %}active{% endif %}">
+                Name
+                {% if sort_by == 'title' %}
+                    {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                {% endif %}
+            </button>
+        </a>
+
+        <a href="?sort_by=date&order={% if sort_by == 'date' %}{{ next_order }}{% else %}desc{% endif %}">
+            <button class="{% if sort_by == 'date' %}active{% endif %}">
+                Date
+                {% if sort_by == 'date' %}
+                    {% if order == 'asc' %}&uarr;{% else %}&darr;{% endif %}
+                {% endif %}
+            </button>
+        </a>
+    </div>
+
+    {% if not user.is_authenticated %}
+        <p>You are not logged in. Please <a href="{% url 'users:login' %}">log in</a> to see your images.</p>
+    {% elif posts %}
+        {% for post in posts %}
+            <article class="post">
+                <h2>
+                    <a href="{% url 'posts:page' slug=post.slug %}">
+                        {{ post.title }}
+                    </a>
+                </h2>
+                <p>{{ post.date }} by {{ post.author }}</p>
+                <form method="POST" action="{% url 'posts:post_delete' post.id %}" onsubmit="return confirm('Are you sure you want to delete {{ post.title }}?')">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </article>
+        {% endfor %}
+    {% else %}
+        <p>You haven't uploaded any images yet. <a href="{% url 'posts:new-post' %}">Create one!</a></p>
+    {% endif %}
+</section>
+{% endblock %}

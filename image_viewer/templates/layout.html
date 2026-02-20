@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+            Django App
+        {% endblock %}
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/main.js' %}" defer></script>
+    <script>
+        // Apply saved theme before paint to avoid flash
+        (function () {
+            const saved = localStorage.getItem('theme');
+            if (saved) document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'posts:list' %}">Images</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'posts:new-post' %}">Upload</a>
+                <form class="logout" action="{% url 'users:logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="logout-button" type="submit">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'users:register' %}">Register</a>
+                <a href="{% url 'users:login' %}">Login</a>
+            {% endif %}
+        </nav>
+
+        <div class="header-right">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+                <span class="theme-icon">🌙</span>
+            </button>
+            <div class="user-status">
+                {% if user.is_authenticated %}
+                    Logged in as <span class="username">{{ user.username }}</span>
+                    {% if user.is_staff %}<span>(Admin)</span>{% endif %}
+                {% else %}
+                    No user logged in
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        const icon = toggle.querySelector('.theme-icon');
+        const html = document.documentElement;
+
+        function applyTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+            localStorage.setItem('theme', theme);
+        }
+
+        // Sync icon with current theme on load
+        applyTheme(html.getAttribute('data-theme') || 'dark');
+
+        toggle.addEventListener('click', () => {
+            const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+        });
+    </script>
+</body>
+</html>

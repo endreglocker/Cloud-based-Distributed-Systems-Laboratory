@@ -1,0 +1,429 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ── Dark theme (default) ── */
+:root,
+[data-theme="dark"] {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a28;
+    --border: #2a2a40;
+    --accent: #7c3aed;
+    --accent-light: #a78bfa;
+    --accent-glow: rgba(124, 58, 237, 0.3);
+    --danger: #ef4444;
+    --danger-dark: #1f0a0a;
+    --danger-border: #4a1a1a;
+    --success: #10b981;
+    --text: #e2e8f0;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+
+    --header-bg: rgba(18, 18, 26, 0.85);
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    --form-shadow: rgba(0, 0, 0, 0.5);
+}
+
+/* ── Light theme ── */
+[data-theme="light"] {
+    --bg: #eaeaea;
+    --surface: #f4f4f4;
+    --surface2: #dcdcdc;
+    --border: #c4c4c4;
+    --accent: #392dea;
+    --accent-light: #283ad9;
+    --accent-glow: rgba(70, 58, 237, 0.15);
+    --danger: #dc2626;
+    --danger-dark: #fce8e8;
+    --danger-border: #e8a0a0;
+    --success: #059669;
+    --text: #1a1a1a;
+    --text-muted: #5a5a5a;
+    --text-dim: #404040;
+
+    --header-bg: rgba(244, 244, 244, 0.9);
+    --card-shadow: rgba(0, 0, 0, 0.08);
+    --form-shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ── Header ── */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    height: 64px;
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+}
+
+nav a:hover {
+    background-color: var(--surface2);
+    color: var(--text);
+}
+
+/* ── Theme Toggle ── */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+    border-color: var(--accent);
+    background-color: var(--surface2);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* ── User Status ── */
+.user-status {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.user-status .username {
+    color: var(--accent-light);
+    font-weight: 600;
+}
+
+.user-status span:last-child {
+    color: var(--success);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* ── Main ── */
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* ── Typography ── */
+h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+h1::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+}
+
+h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--accent-light);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ── Post Cards ── */
+.post {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+}
+
+.post:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px var(--card-shadow);
+}
+
+.post h2 a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.post h2 a:hover {
+    color: var(--accent-light);
+    text-decoration: none;
+}
+
+/* ── Sort Controls ── */
+.sort-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.sort-controls a {
+    text-decoration: none;
+}
+
+.sort-controls button {
+    padding: 0.35rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+}
+
+.sort-controls button:hover {
+    border-color: var(--accent);
+    color: var(--accent-light);
+    background-color: var(--surface2);
+}
+
+.sort-controls button.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* ── Delete Button ── */
+.post form button[type="submit"] {
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--danger-border);
+    background-color: var(--danger-dark);
+    color: var(--danger);
+    font-size: 0.78rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+    letter-spacing: 0.02em;
+}
+
+.post form button[type="submit"]:hover {
+    background-color: #7f1d1d;
+    border-color: var(--danger);
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+}
+
+/* ── Banner Image ── */
+.banner {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+/* ── Forms ── */
+.form-with-validation {
+    max-width: 480px;
+    font-size: 0.95rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px var(--form-shadow);
+}
+
+.form-with-validation label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.form-with-validation div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-with-validation input {
+    padding: 0.6rem 0.9rem;
+    background-color: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-family: 'Space Grotesk', sans-serif;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s;
+}
+
+.form-with-validation input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.form-submit {
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.form-submit:hover {
+    background: var(--accent-light);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+    transform: translateY(-1px);
+}
+
+/* ── Help & Error Text ── */
+.helptext {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.helptext ul {
+    list-style-type: none;
+    padding-left: 0.5rem;
+}
+
+.errorlist {
+    color: var(--danger);
+    font-size: 0.82rem;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.errorlist li::before {
+    content: '! ';
+    font-weight: 700;
+}
+
+/* ── Logout ── */
+.logout {
+    display: inline-flex;
+    align-items: center;
+}
+
+.logout-button {
+    font-size: 0.9rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+}
+
+.logout-button:hover {
+    background-color: var(--surface2);
+    border-color: var(--danger-border);
+    color: var(--danger);
+}
