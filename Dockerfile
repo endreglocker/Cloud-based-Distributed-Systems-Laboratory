@@ -18,5 +18,4 @@ RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
-#CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
-CMD ["sh", "-c", "until python -c \"import psycopg; psycopg.connect('$DATABASE_URL')\" 2>/dev/null; do echo 'Waiting for database...'; sleep 2; done && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && gunicorn image_viewer.wsgi:application --bind 0.0.0.0:8000 --workers 2 --tmp-dir /tmp"]
