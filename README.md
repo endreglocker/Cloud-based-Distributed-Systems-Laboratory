@@ -18,3 +18,8 @@ The goal of this project to create a web-based image-viewer for multiple users.
         - [X] Order by names
         - [X] Order by dates
     - [X] Cicking on item: reveals image
+
+## Lab 3 - Application Scaling
+
+- Documentation regarding the test environment; how the measurments are conducted and their results can be found in [/docs/stress-test/](/docs/stress-test/)
+- The Locust file is located in [locust](/locust/)
