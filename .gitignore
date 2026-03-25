@@ -6,3 +6,4 @@ venv/
 staticfiles/
 .DS_Store
 image_viewer/media/
+deprecated/
