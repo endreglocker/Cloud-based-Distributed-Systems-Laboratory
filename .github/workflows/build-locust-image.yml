@@ -1,0 +1,33 @@
+name: Build Locust image
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - locust/Dockerfile   # only rebuild when the Dockerfile changes
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write   # needed to push to ghcr.io
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}  # built-in, no setup needed
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: locust
+          file: locust/Dockerfile
+          push: true
+          tags: ghcr.io/endreglocker/locust-pillow:latest
