@@ -4,6 +4,12 @@
   <img src="images/proof-1.png" style="width: 75%;">
   <img src="images/proof-2.png" style="width: 75%;">
   <img src="images/proof-3.png" style="width: 75%;">
+  <img src="images/proof-4.png" style="width: 75%;">
+  <img src="images/proof-5.png" style="width: 75%;">
+  <img src="images/proof-6.png" style="width: 75%;">
+  <img src="images/proof-7.png" style="width: 75%;">
+  <img src="images/proof-8.png" style="width: 75%;">
+  <img src="images/proof-9.png" style="width: 75%;">
 </div>
 
 ```bash
@@ -24,84 +30,58 @@ my-app-7955c4df-rgclg   1/1     Running             0          58s
 ```bash
 Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
 --------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
-GET      /                                                                                220   66(30.00%) |   6978       9   30049    610 |    0.37        0.11
-GET      / [gallery default]                                                              206   58(28.16%) |   5842      15   30053    230 |    0.34        0.10
-GET      / [id refresh]                                                                   371   45(12.13%) |   5294       4   30051   1200 |    0.62        0.08
-GET      / [pre-view gallery]                                                              81     5(6.17%) |   6555      20   30041    550 |    0.14        0.01
-GET      / [sort date desc]                                                               198   35(17.68%) |   5256       9   30043    850 |    0.33        0.06
-GET      / [sort title asc]                                                               205   63(30.73%) |   6115       8   30122    280 |    0.34        0.11
-POST     /delete/<id>/ [POST]                                                              79     4(5.06%) |  11115      23   57320   2100 |    0.13        0.01
-GET      /new-post/                                                                       196   26(13.27%) |   8083      14   52531   3100 |    0.33        0.04
-POST     /new-post/ [POST upload]                                                         190   26(13.68%) |   7003      12   42184   1300 |    0.32        0.04
-GET      /users/login/                                                                    219   58(26.48%) |   4013       7   30024    200 |    0.37        0.10
-POST     /users/login/ [POST]                                                             206  112(54.37%) |  22059      17   59832  27000 |    0.34        0.19
-POST     /users/logout/ [POST final]                                                      179   24(13.41%) |  12908      17   52463   5300 |    0.30        0.04
-POST     /users/logout/ [POST]                                                            219   65(29.68%) |   8314       8   55107    590 |    0.37        0.11
-GET      /users/register/                                                                 226    12(5.31%) |  10967      14   30126   5200 |    0.38        0.02
-POST     /users/register/ [POST]                                                          222   76(34.23%) |  11234      14   53230   2600 |    0.37        0.13
+GET      /                                                                                566     2(0.35%) |   2876       4   30007    650 |    0.94        0.00
+GET      / [gallery default]                                                              550     0(0.00%) |   2677      10   25618    490 |    0.92        0.00
+GET      / [id refresh]                                                                   544     0(0.00%) |    373       5    9383    150 |    0.91        0.00
+GET      / [pre-view gallery]                                                             533     0(0.00%) |   1179       9   11720    230 |    0.89        0.00
+GET      / [sort date desc]                                                               543     0(0.00%) |   1257       8   19635    220 |    0.91        0.00
+GET      / [sort title asc]                                                               546     1(0.18%) |   1775       6   19229    270 |    0.91        0.00
+POST     /delete/<id>/ [POST]                                                             531     0(0.00%) |   1716      15   13813    380 |    0.89        0.00
+GET      /new-post/                                                                       540     0(0.00%) |   1364       7   19629    190 |    0.90        0.00
+POST     /new-post/ [POST upload]                                                         540     0(0.00%) |    900      12   10703    500 |    0.90        0.00
+GET      /users/login/                                                                    566     0(0.00%) |    556       6   19404    190 |    0.94        0.00
+POST     /users/login/ [POST]                                                             553     2(0.36%) |  13208    1705   45500  11000 |    0.92        0.00
+POST     /users/logout/ [POST final]                                                      526     0(0.00%) |   1822      14   15668    510 |    0.88        0.00
+POST     /users/logout/ [POST]                                                            566     0(0.00%) |   1071       7   16610    600 |    0.94        0.00
+GET      /users/register/                                                                 574     0(0.00%) |   1930       8   14518    490 |    0.96        0.00
+POST     /users/register/ [POST]                                                          574    12(2.09%) |   3179      10   42316    470 |    0.96        0.02
 --------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
-         Aggregated                                                                      3017  675(22.37%) |   8567       4   59832   1300 |    5.03        1.13
+         Aggregated                                                                      8252    17(0.21%) |   2403       4   45500    400 |   13.77        0.03
 
 Response time percentiles (approximated)
 Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
 --------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
-GET      /                                                                                     610   5200  13000  18000  25000  30000  30000  30000  30000  30000  30000    220
-GET      / [gallery default]                                                                   230   2200   6000  13000  24000  29000  30000  30000  30000  30000  30000    206
-GET      / [id refresh]                                                                       1200   1900   5000  11000  20000  30000  30000  30000  30000  30000  30000    371
-GET      / [pre-view gallery]                                                                  550   2500  11000  19000  25000  30000  30000  30000  30000  30000  30000     81
-GET      / [sort date desc]                                                                    850   2500   5500   7800  22000  26000  30000  30000  30000  30000  30000    198
-GET      / [sort title asc]                                                                    280   3200   6400  13000  26000  30000  30000  30000  30000  30000  30000    205
-POST     /delete/<id>/ [POST]                                                                 2100  16000  21000  22000  31000  42000  56000  57000  57000  57000  57000     79
-GET      /new-post/                                                                           3100   7100  12000  17000  24000  30000  44000  50000  53000  53000  53000    196
-POST     /new-post/ [POST upload]                                                             1300   4000  12000  18000  23000  30000  34000  36000  42000  42000  42000    190
-GET      /users/login/                                                                         200    690   2100   5100  18000  27000  29000  29000  30000  30000  30000    219
-POST     /users/login/ [POST]                                                                27000  30000  30000  30000  40000  53000  57000  58000  60000  60000  60000    206
-POST     /users/logout/ [POST final]                                                          5300  16000  22000  30000  36000  42000  49000  52000  52000  52000  52000    179
-POST     /users/logout/ [POST]                                                                 590   6000  13000  18000  30000  35000  50000  54000  55000  55000  55000    219
-GET      /users/register/                                                                     5400  15000  21000  26000  29000  30000  30000  30000  30000  30000  30000    226
-POST     /users/register/ [POST]                                                              2700  17000  26000  30000  30000  30000  30000  30000  53000  53000  53000    222
+GET      /                                                                                     660   2500   3800   4500   8600  10000  21000  26000  30000  30000  30000    566
+GET      / [gallery default]                                                                   540   2400   3800   4900   8200  10000  19000  21000  26000  26000  26000    550
+GET      / [id refresh]                                                                        150    210    310    400    610   1200   3200   6900   9400   9400   9400    544
+GET      / [pre-view gallery]                                                                  230    770   1400   2000   3800   5600   7800   8600  12000  12000  12000    533
+GET      / [sort date desc]                                                                    220    680   1700   2500   4000   5500   8600   9500  20000  20000  20000    543
+GET      / [sort title asc]                                                                    270   1300   2700   3400   5600   7700  10000  13000  19000  19000  19000    546
+POST     /delete/<id>/ [POST]                                                                  380   1400   2800   3500   5000   6600   9800  11000  14000  14000  14000    531
+GET      /new-post/                                                                            190    720   2000   2600   4400   6200   8800  10000  20000  20000  20000    540
+POST     /new-post/ [POST upload]                                                              500    870   1100   1300   1800   3400   5500   6500  11000  11000  11000    540
+GET      /users/login/                                                                         190    290    350    410    760   1800   6000   9600  19000  19000  19000    566
+POST     /users/login/ [POST]                                                                11000  13000  15000  17000  22000  28000  29000  36000  46000  46000  46000    553
+POST     /users/logout/ [POST final]                                                           510   2000   3100   3500   5100   6500   9500  11000  16000  16000  16000    526
+POST     /users/logout/ [POST]                                                                 600    990   1200   1300   1900   4200   7400   7900  17000  17000  17000    566
+GET      /users/register/                                                                      500   2000   3100   3800   5700   7700   9100  10000  15000  15000  15000    574
+POST     /users/register/ [POST]                                                               490    800    970   1000   6600  30000  36000  38000  42000  42000  42000    574
 --------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
-         Aggregated                                                                           1300   6800  16000  21000  30000  30000  36000  49000  57000  60000  60000   3017
+         Aggregated                                                                            400   1100   2500   3500   7800  11000  19000  26000  37000  46000  46000   8252
 
 Error report
 # occurrences      Error
 ------------------|---------------------------------------------------------------------------------------------------------------------------------------------
-30                 POST /users/register/ [POST]: Register failed: 503
-53                 GET /: HTTPError('503 Server Error: Service Unavailable for url: /')
-55                 POST /users/logout/ [POST]: HTTPError('503 Server Error: Service Unavailable for url: /users/logout/ [POST]')
-56                 GET /users/login/: HTTPError('503 Server Error: Service Unavailable for url: /users/login/')
-58                 POST /users/login/ [POST]: Login failed: 503
-49                 GET / [gallery default]: HTTPError('503 Server Error: Service Unavailable for url: / [gallery default]')
-45                 POST /users/register/ [POST]: Register failed: 504
-48                 GET / [sort title asc]: HTTPError('503 Server Error: Service Unavailable for url: / [sort title asc]')
-31                 GET / [sort date desc]: HTTPError('503 Server Error: Service Unavailable for url: / [sort date desc]')
-11                 GET /users/register/: HTTPError('504 Server Error: Gateway Time-out for url: /users/register/')
-18                 GET /new-post/: HTTPError('503 Server Error: Service Unavailable for url: /new-post/')
-21                 POST /new-post/ [POST upload]: Upload failed: 503
-24                 GET / [id refresh]: HTTPError('503 Server Error: Service Unavailable for url: / [id refresh]')
-4                  POST /users/logout/ [POST final]: HTTPError('503 Server Error: Service Unavailable for url: /users/logout/ [POST final]')
-1                  GET /users/register/: HTTPError('503 Server Error: Service Unavailable for url: /users/register/')
-1                  POST /users/logout/ [POST final]: HTTPError('403 Client Error: Forbidden for url: /users/logout/ [POST final]')
-54                 POST /users/login/ [POST]: Login failed: 504
-21                 GET / [id refresh]: HTTPError('504 Server Error: Gateway Time-out for url: / [id refresh]')
-8                  GET /new-post/: HTTPError('504 Server Error: Gateway Time-out for url: /new-post/')
-19                 POST /users/logout/ [POST final]: HTTPError('504 Server Error: Gateway Time-out for url: /users/logout/ [POST final]')
-3                  POST /delete/<id>/ [POST]: HTTPError('504 Server Error: Gateway Time-out for url: /delete/<id>/ [POST]')
-5                  POST /new-post/ [POST upload]: Upload failed: 504
-15                 GET / [sort title asc]: HTTPError('504 Server Error: Gateway Time-out for url: / [sort title asc]')
-13                 GET /: HTTPError('504 Server Error: Gateway Time-out for url: /')
-1                  POST /users/register/ [POST]: Register failed: 500
-9                  GET / [gallery default]: HTTPError('504 Server Error: Gateway Time-out for url: / [gallery default]')
-3                  GET / [pre-view gallery]: HTTPError('504 Server Error: Gateway Time-out for url: / [pre-view gallery]')
-10                 POST /users/logout/ [POST]: HTTPError('504 Server Error: Gateway Time-out for url: /users/logout/ [POST]')
-4                  GET / [sort date desc]: HTTPError('504 Server Error: Gateway Time-out for url: / [sort date desc]')
-2                  GET /users/login/: HTTPError('504 Server Error: Gateway Time-out for url: /users/login/')
-1                  GET / [pre-view gallery]: HTTPError('503 Server Error: Service Unavailable for url: / [pre-view gallery]')
-1                  POST /delete/<id>/ [POST]: HTTPError('503 Server Error: Service Unavailable for url: /delete/<id>/ [POST]')
-1                  GET / [pre-view gallery]: RemoteDisconnected('Remote end closed connection without response')
+12                 POST /users/register/ [POST]: Register failed: 504
+2                  GET /: HTTPError('504 Server Error: Gateway Time-out for url: /')
+2                  POST /users/login/ [POST]: Login failed: 504
+1                  GET / [sort title asc]: RemoteDisconnected('Remote end closed connection without response')
 ------------------|---------------------------------------------------------------------------------------------------------------------------------------------
 
 Copying results...
 error: unable to upgrade connection: container not found ("locust")
 Done! Results saved to ./locust-results/
+Clean up
+job.batch "locust-load-test" deleted from endre-cloud-based-distributed-systems-laboratory namespace
+configmap "locust-config" deleted from endre-cloud-based-distributed-systems-laboratory namespace
 ```
