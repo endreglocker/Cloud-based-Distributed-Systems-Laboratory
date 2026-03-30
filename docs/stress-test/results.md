@@ -3,6 +3,7 @@
 <div style="text-align: center;">
   <img src="images/proof-1.png" style="width: 75%;">
   <img src="images/proof-2.png" style="width: 75%;">
+  <img src="images/proof-3.png" style="width: 75%;">
 </div>
 
 ```bash
