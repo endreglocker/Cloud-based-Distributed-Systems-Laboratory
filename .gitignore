@@ -9,3 +9,4 @@ image_viewer/media/
 deprecated/
 locust-results/
 iac/terraform.tfvars*
+OKD-locust-setup.sh

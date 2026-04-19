@@ -1,8 +1,8 @@
 # OpenShift Route — TLS edge terminálással. A manuálisan futtatott
 # `oc patch route my-app -p '{"spec":{"tls":{"termination":"edge"}}}'`
 # megfelelője, IaC formában.
-resource "kubernetes_manifest" "route" {
-  manifest = {
+resource "kubectl_manifest" "route" {
+  yaml_body = yamlencode({
     apiVersion = "route.openshift.io/v1"
     kind       = "Route"
     metadata = {
@@ -29,5 +29,5 @@ resource "kubernetes_manifest" "route" {
       }
       wildcardPolicy = "None"
     }
-  }
+  })
 }

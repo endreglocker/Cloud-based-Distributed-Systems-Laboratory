@@ -40,18 +40,6 @@ variable "git_branch" {
   default     = "main"
 }
 
-variable "github_username" {
-  description = "GitHub username for cloning the private repo"
-  type        = string
-  sensitive   = true
-}
-
-variable "github_token" {
-  description = "GitHub PAT with repo scope"
-  type        = string
-  sensitive   = true
-}
-
 variable "postgres_user" {
   description = "PostgreSQL username"
   type        = string

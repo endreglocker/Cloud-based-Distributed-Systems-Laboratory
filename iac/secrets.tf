@@ -1,23 +1,3 @@
-# GitHub clone hitelesítés a BuildConfighoz (ugyanaz, mint a manuális
-# `oc create secret generic git-secret --type=kubernetes.io/basic-auth`).
-resource "kubernetes_secret" "git" {
-  metadata {
-    name      = "git-secret"
-    namespace = var.namespace
-    labels = {
-      "app.kubernetes.io/name"       = var.app_name
-      "app.kubernetes.io/managed-by" = "terraform"
-    }
-  }
-
-  type = "kubernetes.io/basic-auth"
-
-  data = {
-    username = var.github_username
-    password = var.github_token
-  }
-}
-
 # Adatbázis-hitelesítés. Külön Secret, hogy egy helyen legyen az igazság,
 # és a DATABASE_URL ebből álljon össze az appban és a PostgreSQL-ben is.
 resource "kubernetes_secret" "database" {

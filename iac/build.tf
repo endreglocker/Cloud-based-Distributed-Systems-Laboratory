@@ -1,7 +1,7 @@
 # ImageStream — az OpenShift belső image registry címkéje, amire a Deployment
 # mutat. A BuildConfig ide pusholja az új image-eket.
-resource "kubernetes_manifest" "imagestream" {
-  manifest = {
+resource "kubectl_manifest" "imagestream" {
+  yaml_body = yamlencode({
     apiVersion = "image.openshift.io/v1"
     kind       = "ImageStream"
     metadata = {
@@ -17,13 +17,13 @@ resource "kubernetes_manifest" "imagestream" {
         local = false
       }
     }
-  }
+  })
 }
 
 # BuildConfig — klónoz a GitHubról a git-secret-tel, Dockerfile-lel buildel,
 # és az ImageStream :latest tagjére pusholja az eredményt.
-resource "kubernetes_manifest" "buildconfig" {
-  manifest = {
+resource "kubectl_manifest" "buildconfig" {
+  yaml_body = yamlencode({
     apiVersion = "build.openshift.io/v1"
     kind       = "BuildConfig"
     metadata = {
@@ -41,9 +41,7 @@ resource "kubernetes_manifest" "buildconfig" {
           uri = var.git_repo_url
           ref = var.git_branch
         }
-        sourceSecret = {
-          name = kubernetes_secret.git.metadata[0].name
-        }
+        # Publikus repo — nem kell sourceSecret.
       }
       strategy = {
         type           = "Docker"
@@ -59,7 +57,7 @@ resource "kubernetes_manifest" "buildconfig" {
         { type = "ConfigChange" },
       ]
     }
-  }
+  })
 
-  depends_on = [kubernetes_manifest.imagestream]
+  depends_on = [kubectl_manifest.imagestream]
 }

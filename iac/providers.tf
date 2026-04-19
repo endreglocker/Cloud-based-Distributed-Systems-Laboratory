@@ -5,3 +5,10 @@ provider "kubernetes" {
   config_path    = var.kubeconfig_path
   config_context = var.kubeconfig_context
 }
+
+# OpenShift CRD-k (Route, BuildConfig, ImageStream) — YAML apply CRD lookup nélkül.
+provider "kubectl" {
+  config_path      = var.kubeconfig_path
+  config_context   = var.kubeconfig_context
+  load_config_file = true
+}
