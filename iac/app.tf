@@ -1,5 +1,4 @@
-# A feltöltött képekhez tartozó PVC — szintén védett, hogy redeploynál
-# ne veszítsünk el képet.
+# PVC for user-uploaded images also protected so redeploys don't lose data.
 resource "kubernetes_persistent_volume_claim" "media" {
   metadata {
     name      = "${var.app_name}-media"
@@ -27,8 +26,8 @@ resource "kubernetes_persistent_volume_claim" "media" {
   }
 }
 
-# A belső OpenShift image registry címe, hogy a Deployment az ImageStreamből
-# húzza az image-et.
+# Fully-qualified path to the image in OpenShift's internal registry,
+# so the Deployment pulls from the ImageStream.
 locals {
   internal_image = "image-registry.openshift-image-registry.svc:5000/${var.namespace}/${var.app_name}:latest"
 }
@@ -42,9 +41,9 @@ resource "kubernetes_deployment" "app" {
       "app.kubernetes.io/component"  = "web"
       "app.kubernetes.io/managed-by" = "terraform"
     }
-    # Ez az annotation kérleli az OpenShiftet, hogy az ImageStream :latest tag
-    # változásakor automatikusan tekerje újra a Deploymentet. Így a BuildConfig
-    # lefutása után frissül az alkalmazás Terraform-apply nélkül is.
+    # This annotation asks OpenShift to automatically roll the Deployment
+    # whenever the ImageStream's :latest tag changes. Result: a new build
+    # updates the app without needing a terraform apply.
     annotations = {
       "image.openshift.io/triggers" = jsonencode([
         {
@@ -94,8 +93,8 @@ resource "kubernetes_deployment" "app" {
             name           = "http"
           }
 
-          # Csak a DATABASE_URL-t injektáljuk a db Secretből — az app
-          # ennyit lát a DB-ből.
+          # Only DATABASE_URL is injected from the DB Secret the app
+          # sees nothing else of the database credentials.
           env {
             name = "DATABASE_URL"
             value_from {
@@ -155,9 +154,9 @@ resource "kubernetes_deployment" "app" {
     }
   }
 
-  # Az OpenShift image trigger a `spec.template.spec.containers[*].image`
-  # mezőt a saját kezébe veszi az első deploy után — Terraform ne próbálja
-  # visszaírni a :latest tagre minden applynál.
+  # OpenShift's image trigger takes over the `spec.template.spec.containers[*].image`
+  # field after the first deploy Terraform shouldn't try to rewrite it back
+  # to the :latest tag on every apply.
   lifecycle {
     ignore_changes = [
       spec[0].template[0].spec[0].container[0].image,

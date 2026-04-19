@@ -1,6 +1,6 @@
-# Ugyanaz a NetworkPolicy, ami a docsban is szerepel: minden ingress engedélyezve.
-# Szigorúbb környezetben érdemes csak a router podokat engedni, most maradjunk
-# a meglévő viselkedésnél.
+# Same NetworkPolicy as in the earlier V1–V4 docs: allow all ingress.
+# A stricter environment would only allow traffic from the router pods,
+# but keeping parity with the previous manual workflow for now.
 resource "kubernetes_network_policy" "allow_all_ingress" {
   metadata {
     name      = "allow-all-ingress"
@@ -15,7 +15,7 @@ resource "kubernetes_network_policy" "allow_all_ingress" {
     policy_types = ["Ingress"]
 
     ingress {
-      # üres blokk = minden forrás
+      # empty block = allow from any source
     }
   }
 }

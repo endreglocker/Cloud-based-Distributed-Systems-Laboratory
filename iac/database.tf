@@ -1,7 +1,8 @@
-# Adatbázis PersistentVolumeClaim — EZ AZ EGYETLEN HELY, AHOL AZ ADAT VAN.
-# prevent_destroy = true: terraform destroy NEM fogja törölni, csak manuális
-# `terraform state rm` után lehet eldobni. Ez teljesíti a feladat kiírását:
-# "nem elfogadható, ha mindig törlődik a régi adatbázis".
+# Database PersistentVolumeClaim
+# prevent_destroy = true: terraform destroy will NOT delete this;
+# removing it requires a manual `terraform state rm` first.
+# This satisfies the project requirement that the old database must
+# not be wiped on redeploys.
 resource "kubernetes_persistent_volume_claim" "postgres" {
   metadata {
     name      = "postgresql-data"
@@ -43,9 +44,9 @@ resource "kubernetes_deployment" "postgres" {
   spec {
     replicas = 1
 
-    # Egy replikával futó stateful workloadnál a Recreate stratégia
-    # biztonságosabb, mert a PVC ReadWriteOnce — két pod egyszerre nem
-    # tudná mountolni.
+    # Recreate strategy is required because the PVC is ReadWriteOnce 
+    # two pods can't mount the volume simultaneously, so a rolling
+    # update would deadlock.
     strategy {
       type = "Recreate"
     }
@@ -80,8 +81,8 @@ resource "kubernetes_deployment" "postgres" {
             }
           }
 
-          # A sclorg PostgreSQL image a /var/lib/pgsql/data alá írja
-          # az adatokat; ide mountoljuk a PVC-t.
+          # The sclorg PostgreSQL image writes its data under
+          # /var/lib/pgsql/data; that's where the PVC is mounted.
           volume_mount {
             name       = "postgres-data"
             mount_path = "/var/lib/pgsql/data"
@@ -132,8 +133,8 @@ resource "kubernetes_deployment" "postgres" {
     }
   }
 
-  # Ha a DB image címkéje mozgó "latest", ne akarjon minden applynál
-  # plan-változást mutatni a konténer hash miatt.
+  # If the DB image tag is a moving "latest", don't show a plan diff on
+  # every apply just because the underlying container digest shifted.
   lifecycle {
     ignore_changes = [
       spec[0].template[0].spec[0].container[0].image,

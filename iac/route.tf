@@ -1,6 +1,6 @@
-# OpenShift Route — TLS edge terminálással. A manuálisan futtatott
-# `oc patch route my-app -p '{"spec":{"tls":{"termination":"edge"}}}'`
-# megfelelője, IaC formában.
+# OpenShift Route with TLS edge termination.
+# The IaC equivalent of the manual command:
+#   oc patch route my-app -p '{"spec":{"tls":{"termination":"edge"}}}'
 resource "kubectl_manifest" "route" {
   yaml_body = yamlencode({
     apiVersion = "route.openshift.io/v1"

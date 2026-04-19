@@ -1,5 +1,5 @@
-# ImageStream — az OpenShift belső image registry címkéje, amire a Deployment
-# mutat. A BuildConfig ide pusholja az új image-eket.
+# ImageStream, a named tag inside OpenShift's internal image registry.
+# The BuildConfig pushes new images to this tag; the Deployment references it.
 resource "kubectl_manifest" "imagestream" {
   yaml_body = yamlencode({
     apiVersion = "image.openshift.io/v1"
@@ -20,8 +20,8 @@ resource "kubectl_manifest" "imagestream" {
   })
 }
 
-# BuildConfig — klónoz a GitHubról a git-secret-tel, Dockerfile-lel buildel,
-# és az ImageStream :latest tagjére pusholja az eredményt.
+# BuildConfig, clones the public GitHub repo, builds via Dockerfile,
+# pushes the result to the ImageStream's :latest tag.
 resource "kubectl_manifest" "buildconfig" {
   yaml_body = yamlencode({
     apiVersion = "build.openshift.io/v1"
@@ -41,7 +41,7 @@ resource "kubectl_manifest" "buildconfig" {
           uri = var.git_repo_url
           ref = var.git_branch
         }
-        # Publikus repo — nem kell sourceSecret.
+        # Public repo, no sourceSecret needed.
       }
       strategy = {
         type           = "Docker"

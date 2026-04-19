@@ -1,5 +1,4 @@
-# Adatbázis-hitelesítés. Külön Secret, hogy egy helyen legyen az igazság,
-# és a DATABASE_URL ebből álljon össze az appban és a PostgreSQL-ben is.
+# Database credentials.
 resource "kubernetes_secret" "database" {
   metadata {
     name      = "${var.app_name}-db"
@@ -16,12 +15,7 @@ resource "kubernetes_secret" "database" {
     POSTGRESQL_USER     = var.postgres_user
     POSTGRESQL_PASSWORD = var.postgres_password
     POSTGRESQL_DATABASE = var.postgres_database
-    # A Django app ezt az összefűzött URL-t olvassa.
+    # The Django app reads this pre-assembled URL.
     DATABASE_URL = "postgres://${var.postgres_user}:${var.postgres_password}@postgresql:5432/${var.postgres_database}"
   }
-
-  # A jelszó változtatása a Secret-et frissíti, de a futó PostgreSQL-ben
-  # a pg_authid-ben tárolt hash-t NEM cseréli le. Jelszócserét kézzel
-  # kell végigvinni a DB-ben is (pl. ALTER USER ...). A lifecycle blokk
-  # nem véd ez ellen — ez csak figyelmeztetés.
 }
