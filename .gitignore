@@ -8,3 +8,4 @@ staticfiles/
 image_viewer/media/
 deprecated/
 locust-results/
+iac/terraform.tfvars*

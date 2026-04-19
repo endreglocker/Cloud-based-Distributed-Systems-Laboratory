@@ -1,0 +1,98 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        working-directory: image_viewer
+        run: pip install -r requirements.txt
+
+      - name: Django system check
+        working-directory: image_viewer
+        env:
+          DATABASE_URL: sqlite:///tmp/test.db
+        run: python manage.py check
+
+      - name: Run tests
+        working-directory: image_viewer
+        env:
+          DATABASE_URL: sqlite:///tmp/test.db
+        run: python manage.py test
+
+  infra:
+    name: Terraform apply (IaC)
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: iac
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install OC CLI
+        run: |
+          curl -fsSL https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz \
+            | sudo tar -xz -C /usr/local/bin oc kubectl
+          oc version --client
+
+      - name: Login to OKD
+        run: |
+          oc login https://api.okd.fured.cloud.bme.hu:6443 \
+            --token="${{ secrets.OKD_TOKEN }}" \
+            --insecure-skip-tls-verify=true
+          oc project endre-cloud-based-distributed-systems-laboratory
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+
+      - name: Terraform init
+        run: terraform init -input=false
+
+      - name: Terraform validate
+        run: terraform validate
+
+      - name: Terraform plan
+        env:
+          TF_VAR_github_username:   ${{ secrets.GH_CLONE_USERNAME }}
+          TF_VAR_github_token:      ${{ secrets.GH_CLONE_TOKEN }}
+          TF_VAR_postgres_password: ${{ secrets.POSTGRES_PASSWORD }}
+        run: terraform plan -input=false -out=tfplan
+
+      - name: Terraform apply
+        env:
+          TF_VAR_github_username:   ${{ secrets.GH_CLONE_USERNAME }}
+          TF_VAR_github_token:      ${{ secrets.GH_CLONE_TOKEN }}
+          TF_VAR_postgres_password: ${{ secrets.POSTGRES_PASSWORD }}
+        run: terraform apply -input=false -auto-approve tfplan
+
+  build:
+    name: Build & deploy image
+    needs: infra
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger OpenShift build
+        run: |
+          curl -k -X POST \
+            -H "Authorization: Bearer ${{ secrets.OKD_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            https://api.okd.fured.cloud.bme.hu:6443/apis/build.openshift.io/v1/namespaces/endre-cloud-based-distributed-systems-laboratory/buildconfigs/my-app/instantiate \
+            -d '{"kind":"BuildRequest","apiVersion":"build.openshift.io/v1","metadata":{"name":"my-app"}}'
