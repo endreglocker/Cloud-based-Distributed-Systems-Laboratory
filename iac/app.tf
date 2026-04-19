@@ -165,7 +165,7 @@ resource "kubernetes_deployment" "app" {
   }
 
   depends_on = [
-    kubernetes_manifest.imagestream,
+    kubectl_manifest.imagestream,
     kubernetes_secret.database,
   ]
 }
