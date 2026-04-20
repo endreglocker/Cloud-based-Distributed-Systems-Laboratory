@@ -1,4 +1,4 @@
-# PVC for user-uploaded images also protected so redeploys don't lose data.
+# PVC for user-uploaded images also protected so redeploys don't lose data. 
 resource "kubernetes_persistent_volume_claim" "media" {
   metadata {
     name      = "${var.app_name}-media"
