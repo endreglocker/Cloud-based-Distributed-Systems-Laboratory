@@ -385,10 +385,10 @@ jobs:
 
 ### Required GitHub Secrets
 
-| Secret name | Contents |
+| Secret name |
 |---|---|
-| `OKD_TOKEN` | Output of `oc whoami -t` |
-| `POSTGRES_PASSWORD` | Strong password for the database |
+| `OKD_TOKEN` |
+| `POSTGRES_PASSWORD` |
 
 
 ## Components configured
