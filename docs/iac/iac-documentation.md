@@ -13,10 +13,6 @@
 1. **Platform-neutral.**
 2. **Lifecycle guarantees.** The `lifecycle { prevent_destroy = true }` block gives a second, explicit layer of protection on stateful resources (the PostgreSQL and media PVCs). Even a `terraform destroy` command is refused until the resource is removed from state manually.
 
-# Terraform IaC Bundle for the Photo Album on OKD
-
-This bundle contains the declarative definitions (Terraform) for the Django photo album application, the PostgreSQL database, and every associated OpenShift resource (BuildConfig, ImageStream, Route, NetworkPolicy, Secret, PVC). The directory lives at `iac/` in the repository root.
-
 ## Directory structure
 
 Terraform files:
